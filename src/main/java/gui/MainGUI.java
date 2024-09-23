@@ -16,7 +16,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
+import java.util.logging.Logger;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -62,8 +62,9 @@ public class MainGUI extends JFrame {
 		rdbtnNewRadioButton = new JRadioButton("English");
 		rdbtnNewRadioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Logger logger = Logger.getLogger(getClass().getName()); 
 				Locale.setDefault(new Locale("en"));
-				System.out.println("Locale: "+Locale.getDefault());
+				logger.info("Locale: "+Locale.getDefault());
 				paintAgain();				}
 		});
 		buttonGroup.add(rdbtnNewRadioButton);
