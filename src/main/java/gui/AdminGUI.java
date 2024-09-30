@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class AdminGUI extends JFrame {
-
+	//Yeah
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
 	private JButton jButtonDeskontu = null;
