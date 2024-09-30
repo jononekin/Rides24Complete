@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.mockito.*;
 
 import dataAccess.DataAccess;
+import domain.Discount;
 import domain.Driver;
 import exceptions.RideAlreadyExistException;
 import exceptions.RideMustBeLaterThanTodayException;
@@ -43,41 +44,41 @@ public class CreateRideMockTest {
 	 }
 	@After
 	public void tearDown() {
-	persistenceMock.close();
+		persistenceMock.close();
 	 }
 
 	@Test
-	public void test4() {
-	String driverUsername="Driver Test";
-	String driverPassword="123";
-	String rideFrom="Donostia";
-	String rideTo="Zarautz";
-	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-	Date rideDate=null;;
-	try {
-	rideDate = (Date) sdf.parse("05/10/2026");
-	} catch (ParseException e) {
-	e.printStackTrace();
-	}
+		public void test4() {
+		String driverUsername="Driver Test";
+		String driverPassword="123";
+		String rideFrom="Donostia";
+		String rideTo="Zarautz";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Date rideDate=null;;
+		try {
+		rideDate = (Date) sdf.parse("05/10/2026");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 	
 	try {
-	Driver driver=new Driver(driverUsername,driverPassword);
-	driver.addRide(rideFrom, rideTo, rideDate, 2, 10);
-	//configure the state through mocks
-	Mockito.when(db.find(Driver.class, driverUsername)).thenReturn(driver);
-	//equivalent to
-	//Mockito.doReturn(driver).when (db).find (Driver.class, driverUsername);
-	//invoke System Under Test (sut)
-	sut.open();
-	sut.createRide(rideFrom,rideTo,rideDate,0,0,driverUsername);
-	sut.close();
-	fail();
+		Driver driver=new Driver(driverUsername,driverPassword);
+		driver.addRide(rideFrom, rideTo, rideDate, 2, 10);
+		//configure the state through mocks
+		Mockito.when(db.find(Driver.class, driverUsername)).thenReturn(driver);
+		//equivalent to
+		//Mockito.doReturn(driver).when (db).find (Driver.class, driverUsername);
+		//invoke System Under Test (sut)
+		sut.open();
+		sut.createRide(rideFrom,rideTo,rideDate,0,0,driverUsername);
+		sut.close();
+		fail();
 	} catch (RideAlreadyExistException e) {
-	//verify the results
-	sut.close();
-	assertTrue(true);
+		//verify the results
+		sut.close();
+		assertTrue(true);
 	} catch (RideMustBeLaterThanTodayException e) {
-	fail();
+		fail();
 	}
 	}
 	
@@ -92,8 +93,9 @@ public class CreateRideMockTest {
 	//call sut
 	sut.createDiscount(d);
 	//test results ???
-	Mockito.verify(db, Mockito.times(1)).persist(d));
+	Mockito.verify(db, Mockito.times(1)).persist(d);
 	 } catch (Exception e) {
 	fail("If any exception is thrown, it is not working properly");
-	 
+	 }
+	}
 }
