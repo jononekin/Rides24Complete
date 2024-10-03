@@ -30,7 +30,6 @@
     <sonar.organization>braian-pc</sonar.organization>
   	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
   	<sonar.projectKey>braian-pc_rides24complete</sonar.projectKey>
-  	<sonar.login>7fdefcd048e746dec2284f4fa27b57dbfa98d5f8</sonar.login>
 </properties>
 
 <!-- https://mvnrepository.com/artifact/junit/junit -->
