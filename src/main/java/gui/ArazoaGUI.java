@@ -41,7 +41,10 @@ public class ArazoaGUI extends JFrame{
 
 		this.setSize(495, 290);
 		
-		jLabelSelectOption = new JLabel(ResourceBundle.getBundle("Etiquetas").getString("ArazoaGUI.Arazoa"));
+		
+		final String ETIKETA = "Etiquetas";
+		
+		jLabelSelectOption = new JLabel(ResourceBundle.getBundle(ETIKETA).getString("ArazoaGUI.Arazoa"));
 		jLabelSelectOption.setBounds(180, 11, 240, 36);
 		jLabelSelectOption.setFont(new Font("Tahoma", Font.BOLD, 13));
 		jLabelSelectOption.setForeground(Color.BLACK);
@@ -49,22 +52,22 @@ public class ArazoaGUI extends JFrame{
 		
 		jButtonJun = new JButton();
 		jButtonJun.setBounds(40, 70, 240, 50);
-		jButtonJun.setText(ResourceBundle.getBundle("Etiquetas").getString("ArazoaGUI.Eznaizaurkeztu"));
+		jButtonJun.setText(ResourceBundle.getBundle(ETIKETA).getString("ArazoaGUI.Eznaizaurkeztu"));
 		jButtonJun.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				appFacadeInterface.erreklamazioaBidali(nori, nork, gaur, booking, "Ez da agertu",false);
-				jButtonClose_actionPerformed(e);
+				jButtonCloseActionPerformed(e);
 			}
 		});
 		
 		jButtonErrekla = new JButton();
 		jButtonErrekla.setBounds(40, 70, 240, 50);
-		jButtonErrekla.setText(ResourceBundle.getBundle("Etiquetas").getString("BezeroGUI.Erreklamatu"));
+		jButtonErrekla.setText(ResourceBundle.getBundle(ETIKETA).getString("BezeroGUI.Erreklamatu"));
 		jButtonErrekla.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				JFrame a = new ErreklamazioakGUI(nork, nori, booking);
 				a.setVisible(true);
-				jButtonClose_actionPerformed(e);
+				jButtonCloseActionPerformed(e);
 			}
 		});
 		
@@ -78,7 +81,7 @@ public class ArazoaGUI extends JFrame{
 	}
 	
 
-	private void jButtonClose_actionPerformed(ActionEvent e) {
-		this.setVisible(false);
+	private void jButtonCloseActionPerformed(ActionEvent e) {
+		this.dispose();
 	}
 }
