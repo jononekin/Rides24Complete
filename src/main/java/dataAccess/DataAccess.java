@@ -1,6 +1,6 @@
 package dataAccess;
 
-import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -34,16 +38,18 @@ public class DataAccess {
 	public DataAccess() {
 		if (c.isDatabaseInitialized()) {
 			String fileName = c.getDbFilename();
+			Path fileToDelete = Paths.get(fileName);
+            try {
+                // Delete the main file
+                Files.delete(fileToDelete);
+                // Delete the temporary file if it exists
+                Path fileToDeleteTemp = Paths.get(fileName + "$");
+                Files.deleteIfExists(fileToDeleteTemp);
 
-			File fileToDelete = new File(fileName);
-			if (fileToDelete.delete()) {
-				File fileToDeleteTemp = new File(fileName + "$");
-				fileToDeleteTemp.delete();
-
-				System.out.println("File deleted");
-			} else {
-				System.out.println("Operation failed");
-			}
+                System.out.println("File deleted");
+            } catch (IOException e) {
+                System.out.println("Operation failed: " + e.getMessage());
+            }
 		}
 		open();
 		if (c.isDatabaseInitialized()) {
