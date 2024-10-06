@@ -45,16 +45,19 @@ public class Admin2 implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		boolean isTrue=false;
-		if (this == obj)
-			isTrue=true;
-		if (obj == null)
-			isTrue=false;
-		if (getClass() != obj.getClass())
-			isTrue=false;
-		Admin2 other = (Admin2) obj;
-		if (username != other.username)
-			isTrue=false;
+		boolean isTrue = false;
+		if(obj!= null) {
+			if(this == obj) {
+				isTrue=true;
+			}
+			else {
+			if(getClass() == obj.getClass()) {
+				Admin2 other = (Admin2) obj;
+				if(username == other.username)
+					isTrue=true;
+				}
+			}
+		}
 		return isTrue;
 	}
 	

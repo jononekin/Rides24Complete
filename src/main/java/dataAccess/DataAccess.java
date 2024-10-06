@@ -935,7 +935,6 @@ public class DataAccess {
 			e.printStackTrace();
 			db.getTransaction().rollback();
 		}
-
 	}
 
 	public boolean updateAlertaAurkituak(String username) {
