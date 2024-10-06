@@ -1,22 +1,26 @@
 package test;
 
-import static org.junit.Assert.*;
+import domain.*;
+import testOperations.TestDataAccess;
 
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+import dataAccess.DataAccess;
+
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import dataAccess.DataAccess;
-import domain.Booking;
-import domain.Ride;
-import domain.Traveler;
-import domain.Driver;
-import testOperations.TestDataAccess;
+import org.junit.Before;
+import org.junit.Test;
 
-public class CancelRideWhiteTest {
+public class CancelRideBDBlackTest {
 	private Date data = new Date();
 	private Driver driver = new Driver("Hey", "you");
 	private Ride ride = new Ride("Californi", "Cation", data, 123, 14, driver);
@@ -31,7 +35,8 @@ public class CancelRideWhiteTest {
 	}
 
 	@Test
-	public void nullTest() {
+	//Metodoan sartzen zen parametroa Null baldin bada
+	public void test1() {
 		try {
 			//define parameters
 			ride=null;
@@ -51,7 +56,8 @@ public class CancelRideWhiteTest {
 	}
 
 	@Test
-	public void yesDBnullTest() {
+	//Metodoan sartzen den parametroaren Booking lista gaizki sortuta egotea
+	public void test2() {
 		try {
 			ArrayList<String> array = new ArrayList<String>();
 			array.add("3");
@@ -72,34 +78,8 @@ public class CancelRideWhiteTest {
 	}
 
 	@Test
-	public void BookingYeahTest() {
-		try {
-			
-			List<Booking> bookList = new ArrayList<>();
-			bookList.add(book);
-			book.setStatus("Accepted");
-			ride.setBookings(bookList);
-			
-			//define parameters
-			
-			sut.open();
-			sut.cancelRide(ride);
-
-		   } catch (NullPointerException e) {
-				System.out.println("NullPointerException jaso da, berez ondo dago!");
-				fail();
-
-			}	catch(Exception e) {
-				System.out.println("true?");
-				fail();
-			}
-			finally {
-				sut.close();
-			}
-	}
-
-	@Test
-	public void BookingNoYeahTest() {
+	//Booking lista elementurik ez izatea
+	public void test3() {
 		try {
 			
 			List<Booking> bookList = new ArrayList<>();
@@ -113,7 +93,33 @@ public class CancelRideWhiteTest {
 			sut.cancelRide(ride);
 
 		   } catch (NullPointerException e) {
-				System.out.println("NullPointerException jaso da, berez ondo dago!");
+				fail();
+
+			}	catch(Exception e) {
+				System.out.println("true?");
+				fail();
+			}
+			finally {
+				sut.close();
+			}
+	}
+	
+	@Test
+	//Ondo sortuta egotea eta "Accepted" egoera bezala izatea Booking-a
+	public void test4() {
+		try {
+			
+			List<Booking> bookList = new ArrayList<>();
+			bookList.add(book);
+			book.setStatus("Accepted");
+			ride.setBookings(bookList);
+			
+			//define parameters
+			
+			sut.open();
+			sut.cancelRide(ride);
+
+		   } catch (NullPointerException e) {
 				fail();
 
 			}	catch(Exception e) {
