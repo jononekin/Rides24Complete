@@ -83,8 +83,6 @@ public class CancelRideBDBlackTest {
 		try {
 			
 			List<Booking> bookList = new ArrayList<>();
-			bookList.add(book);
-			book.setStatus("Denied");
 			ride.setBookings(bookList);
 			
 			//define parameters
