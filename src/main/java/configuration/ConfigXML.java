@@ -138,10 +138,17 @@ public class ConfigXML {
 
 		  return nValue.getNodeValue();
 
-	 }
+	 };
 	
 	public static ConfigXML getInstance() {
-		return theInstance;
+		if (theInstance == null) {
+            synchronized (ConfigXML.class) {
+                if (theInstance == null) {
+                	theInstance = new ConfigXML();
+                }
+            }
+        }
+        return theInstance;
 	}
 
 	public String getBusinessLogicNode() {
