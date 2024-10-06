@@ -140,7 +140,7 @@ public class ConfigXML {
 
 	 };
 	
-	public static ConfigXML getInstance() {
+	public static synchronized ConfigXML getInstance() {
 		if (theInstance == null) {
             synchronized (ConfigXML.class) {
                 if (theInstance == null) {
