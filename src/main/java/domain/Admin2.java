@@ -51,10 +51,10 @@ public class Admin2 implements Serializable {
 				isTrue=true;
 			}
 			else {
-			if(getClass() == obj.getClass()) {
-				Admin2 other = (Admin2) obj;
-				if(username == other.username)
-					isTrue=true;
+				if(getClass() == obj.getClass()) {
+					Admin2 other = (Admin2) obj;
+					if(username == other.username)
+						isTrue=true;
 				}
 			}
 		}
