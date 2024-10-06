@@ -30,7 +30,7 @@ import exceptions.RideMustBeLaterThanTodayException;
 public class DataAccess {
 	private EntityManager db;
 	private EntityManagerFactory emf;
-	final String REJECTED = "Rejected";
+	static final String REJECTED = "Rejected";
 
 	ConfigXML c = ConfigXML.getInstance();
 	
