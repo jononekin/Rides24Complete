@@ -653,10 +653,10 @@ public class DataAccess {
 		}
 	}
 
-	public void cancelRide(Ride ride) {
+	public void cancelRide(Ride ride) throws Exception {
 		try {
 			db.getTransaction().begin();
-
+			
 			for (Booking booking : ride.getBookings()) {
 				if (booking.getStatus().equals("Accepted") || booking.getStatus().equals("NotDefined")) {
 					double price = booking.prezioaKalkulatu();
@@ -678,11 +678,13 @@ public class DataAccess {
 			db.merge(ride);
 
 			db.getTransaction().commit();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			if (db.getTransaction().isActive()) {
 				db.getTransaction().rollback();
 			}
-			e.printStackTrace();
+			//e.printStackTrace()
+			throw(e);
 		}
 	}
 

@@ -77,7 +77,7 @@ public class CreateRideBDWhiteTest {
 				} finally {
 					sut.close();
 				}
-					   }
+		}
 	@Test
 	//sut.createRide:  The Driver("Driver Test") does not exist in the DB. The test must return null 
 	//The test supposes that the "Driver Test" does not exist in the DB
