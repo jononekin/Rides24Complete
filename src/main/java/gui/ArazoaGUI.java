@@ -56,7 +56,7 @@ public class ArazoaGUI extends JFrame{
 		jButtonJun.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				appFacadeInterface.erreklamazioaBidali(nori, nork, gaur, booking, "Ez da agertu",false);
-				jButtonCloseActionPerformed(e);
+				jButtonCloseActionPerformed();
 			}
 		});
 		
@@ -67,7 +67,7 @@ public class ArazoaGUI extends JFrame{
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				JFrame a = new ErreklamazioakGUI(nork, nori, booking);
 				a.setVisible(true);
-				jButtonCloseActionPerformed(e);
+				jButtonCloseActionPerformed();
 			}
 		});
 		
@@ -81,7 +81,7 @@ public class ArazoaGUI extends JFrame{
 	}
 	
 
-	private void jButtonCloseActionPerformed(ActionEvent e) {
-		this.dispose();
+	private void jButtonCloseActionPerformed() {
+		this.setVisible(false);
 	}
 }
