@@ -1,4 +1,4 @@
-package test;
+package test; 
 
 import domain.*;
 import testOperations.TestDataAccess;
@@ -61,7 +61,7 @@ public class CancelRideBDBlackTest {
 		try {
 			ArrayList<String> array = new ArrayList<String>();
 			array.add("3");
-			//Ezin dugu frogatu parametro mota desberdinak sartzen direnean, baina gaizkzi gertatzen denez ondo joan da.
+			//Ezin dugu frogatu parametro mota desberdinak sartzen direnean, baina gaizki gertatzen denez ondo joan da.
 			ride.setBookings(array);
 			
 			//define parameters

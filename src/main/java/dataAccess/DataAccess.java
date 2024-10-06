@@ -633,7 +633,7 @@ public class DataAccess {
 			db.getTransaction().rollback();
 		}
 	}
-	
+
 	public List<Booking> getBookingFromDriver(String username) {
 		try {
 			db.getTransaction().begin();
