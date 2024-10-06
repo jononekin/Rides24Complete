@@ -69,12 +69,12 @@ public class CancelRideBDBlackTest {
 			sut.open();
 			sut.cancelRide(ride);
 
-		   } catch(Exception e) {
-				System.out.println("true?");
-			}
-			finally {
-				sut.close();
-			}
+		} catch(Exception e) {
+			System.out.println("true?");
+		}
+		finally {
+			sut.close();
+		}
 	}
 
 	@Test
@@ -94,7 +94,6 @@ public class CancelRideBDBlackTest {
 				fail();
 
 			}	catch(Exception e) {
-				System.out.println("true?");
 				fail();
 			}
 			finally {
@@ -121,7 +120,6 @@ public class CancelRideBDBlackTest {
 				fail();
 
 			}	catch(Exception e) {
-				System.out.println("true?");
 				fail();
 			}
 			finally {

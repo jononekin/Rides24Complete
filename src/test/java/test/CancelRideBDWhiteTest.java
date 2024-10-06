@@ -29,29 +29,10 @@ public class CancelRideBDWhiteTest {
 	@Before
 	public void setUp() throws Exception {
 	}
-
+	
+	//Datu-basea hasieratzea baina booklist gaizki egotea
 	@Test
-	public void nullTest() {
-		try {
-			//define parameters
-			ride=null;
-			
-			sut.open();
-			sut.cancelRide(ride);
-
-		   } catch (NullPointerException e) {
-				System.out.println("NullPointerException jaso da, berez ondo dago!");
-
-			}	catch(Exception e) {
-				fail();
-		}
-		finally {
-			sut.close();
-		}
-	}
-
-	@Test
-	public void yesDBnullTest() {
+	public void test1() {
 		try {
 			ArrayList<String> array = new ArrayList<String>();
 			array.add("3");
@@ -70,9 +51,56 @@ public class CancelRideBDWhiteTest {
 				sut.close();
 			}
 	}
-
+	
+	//Null parametro ematea metodoan
 	@Test
-	public void BookingYeahTest() {
+	public void test2() {
+		try {
+			//define parameters
+			ride=null;
+			
+			sut.open();
+			sut.cancelRide(ride);
+
+		   } catch (NullPointerException e) {
+				System.out.println("NullPointerException jaso da, berez ondo dago!");
+
+			}	catch(Exception e) {
+				fail();
+		}
+		finally {
+			sut.close();
+		}
+	}
+	
+	@Test
+	//Booking lista elementurik ez izatea
+	public void test3() {
+		try {
+			
+			List<Booking> bookList = new ArrayList<>();
+			ride.setBookings(bookList);
+			
+			//define parameters
+			
+			sut.open();
+			sut.cancelRide(ride);
+
+		   } catch (NullPointerException e) {
+				fail();
+
+			}	catch(Exception e) {
+				fail();
+			}
+			finally {
+				sut.close();
+			}
+	}
+	
+	
+	//Booklist "Accepted" kasuetan ondo funtzionatzen duela frogatu nahi da
+	@Test
+	public void test4() {
 		try {
 			
 			List<Booking> bookList = new ArrayList<>();
@@ -97,9 +125,10 @@ public class CancelRideBDWhiteTest {
 				sut.close();
 			}
 	}
-
+	
+	//Booklist "Denied" kasuetan ondo funtzionatzen duela frogatu nahi da
 	@Test
-	public void BookingNoYeahTest() {
+	public void test5() {
 		try {
 			
 			List<Booking> bookList = new ArrayList<>();

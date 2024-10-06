@@ -30,13 +30,16 @@ public class GetBookingFromDriverDBWhiteTest {
     	
 		
 	}
-    // Test Case 1: Excepción lanzada (NULL input)
+    // Test Case 1: Excepciï¿½n lanzada (NULL input)
     @Test
     public void test1() {
-    	sut.open();
-    	List<Booking> result = sut.getBookingFromDriver(null);
-        assertEquals(null, result); 
-        sut.close();
+    	try {
+    		sut.open();
+    		List<Booking> result = sut.getBookingFromDriver(null);
+    		assertEquals(null, result);
+    	}finally{
+    		sut.close();
+    	}
     }
     
 
@@ -55,7 +58,7 @@ public class GetBookingFromDriverDBWhiteTest {
     public void test3() {
     	sut.open();
         List<Booking> result = sut.getBookingFromDriver("Urtzi");
-        assertEquals(null, result); // No hay bookings porque la ride no está activa
+        assertEquals(null, result); // No hay bookings porque la ride no estï¿½ activa
         sut.close();
     }
 
@@ -66,7 +69,7 @@ public class GetBookingFromDriverDBWhiteTest {
 
         List<Booking> result = sut.getBookingFromDriver("Unax");
 
-        assertEquals(1, result.size()); // Debería haber un booking
+        assertEquals(1, result.size()); // Deberï¿½a haber un booking
         sut.close();
     }
 
