@@ -144,7 +144,7 @@ public class ConfigXML {
 		if (theInstance == null) {
             synchronized (ConfigXML.class) {
                 if (theInstance == null) {
-                	theInstance = new ConfigXML();
+                	theInstance = new ConfigXML();//
                 }
             }
         }
