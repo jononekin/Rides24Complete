@@ -40,7 +40,7 @@ public class CancelRideTest {
 			sut.close();
 		}
 	}
-	
+
 	@Test
 	public void yesDBnullTest() {
 		try {
