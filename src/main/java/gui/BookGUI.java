@@ -98,7 +98,7 @@ public class BookGUI extends JFrame {
 
 		jButtonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jButton2_actionPerformed(e);
+				jButton2ActionPerformed(e);
 			}
 		});
 
@@ -460,7 +460,7 @@ public class BookGUI extends JFrame {
 
 	}
 
-	private void jButton2_actionPerformed(ActionEvent e) {
+	private void jButton2ActionPerformed(ActionEvent e) {
 		this.setVisible(false);
 	}
 

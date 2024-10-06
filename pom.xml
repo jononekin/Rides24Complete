@@ -27,6 +27,9 @@
 <properties>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
+    <sonar.organization>braian-pc</sonar.organization>
+  	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  	<sonar.projectKey>braian-pc_rides24complete</sonar.projectKey>
 </properties>
 
 <!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -86,7 +89,7 @@
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
 			<version>1.1</version>
-		</dependency>	
+		</dependency>
 		<dependency>
     		<groupId>org.mockito</groupId>
    			 <artifactId>mockito-inline</artifactId>

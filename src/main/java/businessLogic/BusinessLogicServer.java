@@ -22,11 +22,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Serializable;
+import java.util.logging.Logger;
 
 /**
  * It runs the business logic server as a separate process.
  */
-public class BusinessLogicServer extends JDialog {
+public class BusinessLogicServer extends JDialog implements Serializable {
 
 	/**
 	 * 
@@ -34,8 +36,9 @@ public class BusinessLogicServer extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	JTextArea textArea;
-	BLFacade server;
+	transient  BLFacade server;
 	String service;
+	Logger logger = Logger.getLogger(getClass().getName());
 
 	public static void main(String[] args) {
 		try {
@@ -102,7 +105,7 @@ public class BusinessLogicServer extends JDialog {
 			try{
 				
 				if (!c.isDatabaseLocal()) {
-					System.out.println("\nWARNING: Please be sure ObjectdbManagerServer is launched\n           in machine: "+c.getDatabaseNode()+" port: "+c.getDatabasePort()+"\n");	
+					logger.info("\nWARNING: Please be sure ObjectdbManagerServer is launched\n           in machine: "+c.getDatabaseNode()+" port: "+c.getDatabasePort()+"\n");	
 				}
 				
 				service= "http://"+c.getBusinessLogicNode() +":"+ c.getBusinessLogicPort()+"/ws/"+c.getBusinessLogicName();

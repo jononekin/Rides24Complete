@@ -1,6 +1,6 @@
 package dataAccess;
 
-import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -26,6 +30,7 @@ import exceptions.RideMustBeLaterThanTodayException;
 public class DataAccess {
 	private EntityManager db;
 	private EntityManagerFactory emf;
+	static final String REJECTED = "Rejected";
 
 	ConfigXML c = ConfigXML.getInstance();
 	
@@ -34,16 +39,18 @@ public class DataAccess {
 	public DataAccess() {
 		if (c.isDatabaseInitialized()) {
 			String fileName = c.getDbFilename();
+			Path fileToDelete = Paths.get(fileName);
+            try {
+                // Delete the main file
+                Files.delete(fileToDelete);
+                // Delete the temporary file if it exists
+                Path fileToDeleteTemp = Paths.get(fileName + "$");
+                Files.deleteIfExists(fileToDeleteTemp);
 
-			File fileToDelete = new File(fileName);
-			if (fileToDelete.delete()) {
-				File fileToDeleteTemp = new File(fileName + "$");
-				fileToDeleteTemp.delete();
-
-				System.out.println("File deleted");
-			} else {
-				System.out.println("Operation failed");
-			}
+                System.out.println("File deleted");
+            } catch (IOException e) {
+                System.out.println("Operation failed: " + e.getMessage());
+            }
 		}
 		open();
 		if (c.isDatabaseInitialized()) {
@@ -103,12 +110,14 @@ public class DataAccess {
 
 			cal.set(2024, Calendar.APRIL, 20);
 			Date date4 = UtilDate.trim(cal.getTime());
-
-			driver1.addRide("Donostia", "Madrid", date2, 5, 20); //ride1
-			driver1.addRide("Irun", "Donostia", date2, 5, 2); //ride2
-			driver1.addRide("Madrid", "Donostia", date3, 5, 5); //ride3
-			driver1.addRide("Barcelona", "Madrid", date4, 0, 10); //ride4
-			driver2.addRide("Donostia", "Hondarribi", date1, 5, 3); //ride5
+			
+			final String DONOSTIA = "Donostia";
+			final String MADRID = "Madrid";
+			driver1.addRide(DONOSTIA, MADRID, date2, 5, 20); //ride1
+			driver1.addRide("Irun", DONOSTIA, date2, 5, 2); //ride2
+			driver1.addRide(MADRID, DONOSTIA, date3, 5, 5); //ride3
+			driver1.addRide("Barcelona", MADRID, date4, 0, 10); //ride4
+			driver2.addRide(DONOSTIA, "Hondarribi", date1, 5, 3); //ride5
 
 			Ride ride1 = driver1.getCreatedRides().get(0);
 			Ride ride2 = driver1.getCreatedRides().get(1);
@@ -122,11 +131,14 @@ public class DataAccess {
 			Booking book3 = new Booking(ride2, traveler2, 2);
 			Booking book5 = new Booking(ride5, traveler1, 1);
 
-			book1.setStatus("Accepted");
-			book2.setStatus("Rejected");
-			book3.setStatus("Accepted");
-			book4.setStatus("Accepted");
-			book5.setStatus("Accepted");
+			final String ACCEPTED = "Accepted";
+			
+			
+			book1.setStatus(ACCEPTED);
+			book2.setStatus(REJECTED);
+			book3.setStatus(ACCEPTED);
+			book4.setStatus(ACCEPTED);
+			book5.setStatus(ACCEPTED);
 
 			db.persist(book1);
 			db.persist(book2);
@@ -134,11 +146,12 @@ public class DataAccess {
 			db.persist(book4);
 			db.persist(book5);
 
-			Movement m1 = new Movement(traveler1, "BookFreeze", 20);
-			Movement m2 = new Movement(traveler1, "BookFreeze", 40);
-			Movement m3 = new Movement(traveler1, "BookFreeze", 5);
-			Movement m4 = new Movement(traveler2, "BookFreeze", 4);
-			Movement m5 = new Movement(traveler1, "BookFreeze", 3);
+			final String BOOKFREEZE = "BookFreeze";
+			Movement m1 = new Movement(traveler1, BOOKFREEZE, 20);
+			Movement m2 = new Movement(traveler1, BOOKFREEZE, 40);
+			Movement m3 = new Movement(traveler1, BOOKFREEZE, 5);
+			Movement m4 = new Movement(traveler2, BOOKFREEZE, 4);
+			Movement m5 = new Movement(traveler1, BOOKFREEZE, 3);
 			Movement m6 = new Movement(driver1, "Deposit", 15);
 			Movement m7 = new Movement(traveler1, "Deposit", 168);
 			
@@ -647,7 +660,7 @@ public class DataAccess {
 		}
 	}
 
-	public void cancelRide(Ride ride) {
+	public void cancelRide(Ride ride) throws Exception {
 		try {
 			db.getTransaction().begin();
 
@@ -671,12 +684,14 @@ public class DataAccess {
 			ride.setActive(false);
 			db.merge(ride);
 
-			db.getTransaction().commit();
-		} catch (Exception e) {
+			//db.getTransaction().commit();
+		}
+		catch (Exception e) {
 			if (db.getTransaction().isActive()) {
 				db.getTransaction().rollback();
 			}
-			e.printStackTrace();
+			//e.printStackTrace()
+			throw(e);
 		}
 	}
 
@@ -871,7 +886,7 @@ public class DataAccess {
 				List<Booking> lb = getBookedRides(us.getUsername());
 				if (lb != null) {
 					for (Booking li : lb) {
-						li.setStatus("Rejected");
+						li.setStatus(REJECTED);
 						li.getRide().setnPlaces(li.getRide().getnPlaces() + li.getSeats());
 					}
 				}
@@ -935,7 +950,6 @@ public class DataAccess {
 			e.printStackTrace();
 			db.getTransaction().rollback();
 		}
-
 	}
 
 	public boolean updateAlertaAurkituak(String username) {

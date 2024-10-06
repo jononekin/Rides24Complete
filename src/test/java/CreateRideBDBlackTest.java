@@ -44,7 +44,6 @@ public class CreateRideBDBlackTest {
 		try {
 			rideDate = sdf.parse("05/10/2026");
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		Ride ride=null;
