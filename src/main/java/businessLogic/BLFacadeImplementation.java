@@ -299,7 +299,12 @@ public class BLFacadeImplementation implements BLFacade {
 	@Override
 	public void cancelRide(Ride ride) {
 		dbManager.open();
-		dbManager.cancelRide(ride);
+		try {
+			dbManager.cancelRide(ride);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		dbManager.close();
 	}
 

@@ -678,7 +678,7 @@ public class DataAccess {
 					addMovement(traveler, "BookDeny", price);
 					db.getTransaction().begin();
 				}
-				booking.setStatus(REJECTED);
+				booking.setStatus("Rejected");
 				db.merge(booking);
 			}
 			ride.setActive(false);
