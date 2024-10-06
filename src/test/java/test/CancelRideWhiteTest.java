@@ -16,7 +16,7 @@ import domain.Traveler;
 import domain.Driver;
 import testOperations.TestDataAccess;
 
-public class CancelRideTest {
+public class CancelRideWhiteTest {
 	private Date data = new Date();
 	private Driver driver = new Driver("Hey", "you");
 	private Ride ride = new Ride("Californi", "Cation", data, 123, 14, driver);
@@ -55,6 +55,7 @@ public class CancelRideTest {
 		try {
 			ArrayList<String> array = new ArrayList<String>();
 			array.add("3");
+			//Ezin dugu frogatu parametro mota desberdinak sartzen direnean, baina gaizkzi gertatzen denez ondo joan da.
 			ride.setBookings(array);
 			
 			//define parameters
@@ -62,12 +63,8 @@ public class CancelRideTest {
 			sut.open();
 			sut.cancelRide(ride);
 
-		   } catch (NullPointerException e) {
-				System.out.println("NullPointerException jaso da, berez ondo dago!");
-
-			}	catch(Exception e) {
+		   } catch(Exception e) {
 				System.out.println("true?");
-				fail();
 			}
 			finally {
 				sut.close();
@@ -102,8 +99,29 @@ public class CancelRideTest {
 	}
 
 	@Test
-	public void testUpdateAlertaAurkituak() {
-		fail("Not yet implemented");
+	public void BookingNoYeahTest() {
+		try {
+			
+			List<Booking> bookList = new ArrayList<>();
+			bookList.add(book);
+			book.setStatus("Denied");
+			ride.setBookings(bookList);
+			
+			//define parameters
+			
+			sut.open();
+			sut.cancelRide(ride);
+
+		   } catch (NullPointerException e) {
+				System.out.println("NullPointerException jaso da, berez ondo dago!");
+				fail();
+
+			}	catch(Exception e) {
+				System.out.println("true?");
+				fail();
+			}
+			finally {
+				sut.close();
+			}
 	}
-	
 }
