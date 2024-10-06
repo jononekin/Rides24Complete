@@ -30,6 +30,7 @@ import exceptions.RideMustBeLaterThanTodayException;
 public class DataAccess {
 	private EntityManager db;
 	private EntityManagerFactory emf;
+	static final String REJECTED = "Rejected";
 
 	ConfigXML c = ConfigXML.getInstance();
 	
@@ -109,12 +110,14 @@ public class DataAccess {
 
 			cal.set(2024, Calendar.APRIL, 20);
 			Date date4 = UtilDate.trim(cal.getTime());
-
-			driver1.addRide("Donostia", "Madrid", date2, 5, 20); //ride1
-			driver1.addRide("Irun", "Donostia", date2, 5, 2); //ride2
-			driver1.addRide("Madrid", "Donostia", date3, 5, 5); //ride3
-			driver1.addRide("Barcelona", "Madrid", date4, 0, 10); //ride4
-			driver2.addRide("Donostia", "Hondarribi", date1, 5, 3); //ride5
+			
+			final String DONOSTIA = "Donostia";
+			final String MADRID = "Madrid";
+			driver1.addRide(DONOSTIA, MADRID, date2, 5, 20); //ride1
+			driver1.addRide("Irun", DONOSTIA, date2, 5, 2); //ride2
+			driver1.addRide(MADRID, DONOSTIA, date3, 5, 5); //ride3
+			driver1.addRide("Barcelona", MADRID, date4, 0, 10); //ride4
+			driver2.addRide(DONOSTIA, "Hondarribi", date1, 5, 3); //ride5
 
 			Ride ride1 = driver1.getCreatedRides().get(0);
 			Ride ride2 = driver1.getCreatedRides().get(1);
@@ -128,11 +131,14 @@ public class DataAccess {
 			Booking book3 = new Booking(ride2, traveler2, 2);
 			Booking book5 = new Booking(ride5, traveler1, 1);
 
-			book1.setStatus("Accepted");
-			book2.setStatus("Rejected");
-			book3.setStatus("Accepted");
-			book4.setStatus("Accepted");
-			book5.setStatus("Accepted");
+			final String ACCEPTED = "Accepted";
+			
+			
+			book1.setStatus(ACCEPTED);
+			book2.setStatus(REJECTED);
+			book3.setStatus(ACCEPTED);
+			book4.setStatus(ACCEPTED);
+			book5.setStatus(ACCEPTED);
 
 			db.persist(book1);
 			db.persist(book2);
@@ -140,11 +146,12 @@ public class DataAccess {
 			db.persist(book4);
 			db.persist(book5);
 
-			Movement m1 = new Movement(traveler1, "BookFreeze", 20);
-			Movement m2 = new Movement(traveler1, "BookFreeze", 40);
-			Movement m3 = new Movement(traveler1, "BookFreeze", 5);
-			Movement m4 = new Movement(traveler2, "BookFreeze", 4);
-			Movement m5 = new Movement(traveler1, "BookFreeze", 3);
+			final String BOOKFREEZE = "BookFreeze";
+			Movement m1 = new Movement(traveler1, BOOKFREEZE, 20);
+			Movement m2 = new Movement(traveler1, BOOKFREEZE, 40);
+			Movement m3 = new Movement(traveler1, BOOKFREEZE, 5);
+			Movement m4 = new Movement(traveler2, BOOKFREEZE, 4);
+			Movement m5 = new Movement(traveler1, BOOKFREEZE, 3);
 			Movement m6 = new Movement(driver1, "Deposit", 15);
 			Movement m7 = new Movement(traveler1, "Deposit", 168);
 			
@@ -671,7 +678,7 @@ public class DataAccess {
 					addMovement(traveler, "BookDeny", price);
 					db.getTransaction().begin();
 				}
-				booking.setStatus("Rejected");
+				booking.setStatus(REJECTED);
 				db.merge(booking);
 			}
 			ride.setActive(false);
@@ -879,7 +886,7 @@ public class DataAccess {
 				List<Booking> lb = getBookedRides(us.getUsername());
 				if (lb != null) {
 					for (Booking li : lb) {
-						li.setStatus("Rejected");
+						li.setStatus(REJECTED);
 						li.getRide().setnPlaces(li.getRide().getnPlaces() + li.getSeats());
 					}
 				}
