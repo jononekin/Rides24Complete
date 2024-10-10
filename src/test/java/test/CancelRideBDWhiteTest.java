@@ -5,11 +5,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import data_access.DataAccess;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import dataAccess.DataAccess;
 import domain.Booking;
 import domain.Ride;
 import domain.Traveler;

@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import dataAccess.DataAccess;
+import data_access.DataAccess;
 
 import static org.mockito.Mockito.when;
 
