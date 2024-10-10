@@ -866,34 +866,9 @@ public class DataAccess {
 	public void deleteUser(User us) {
 		try {
 			if (us.getMota().equals("Driver")) {
-				List<Ride> rl = getRidesByDriver(us.getUsername());
-				if (rl != null) {
-					for (Ride ri : rl) {
-						cancelRide(ri);
-					}
-				}
-				Driver d = getDriver(us.getUsername());
-				List<Car> cl = d.getCars();
-				if (cl != null) {
-					for (int i = cl.size() - 1; i >= 0; i--) {
-						Car ci = cl.get(i);
-						deleteCar(ci);
-					}
-				}
+				exDeleteDriver(us);
 			} else {
-				List<Booking> lb = getBookedRides(us.getUsername());
-				if (lb != null) {
-					for (Booking li : lb) {
-						li.setStatus(REJECTED);
-						li.getRide().setnPlaces(li.getRide().getnPlaces() + li.getSeats());
-					}
-				}
-				List<Alert> la = getAlertsByUsername(us.getUsername());
-				if (la != null) {
-					for (Alert lx : la) {
-						deleteAlert(lx.getAlertNumber());
-					}
-				}
+				exDeleteNonUser(us);
 			}
 			db.getTransaction().begin();
 			us = db.merge(us);
@@ -901,6 +876,38 @@ public class DataAccess {
 			db.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	private void exDeleteDriver(User us) throws Exception {
+		List<Ride> rl = getRidesByDriver(us.getUsername());
+		if (rl != null) {
+			for (Ride ri : rl) {
+				cancelRide(ri);
+			}
+		}
+		Driver d = getDriver(us.getUsername());
+		List<Car> cl = d.getCars();
+		if (cl != null) {
+			for (int i = cl.size() - 1; i >= 0; i--) {
+				Car ci = cl.get(i);
+				deleteCar(ci);
+			}
+		}
+	}
+	
+	private void exDeleteNonUser(User us) {
+		List<Booking> lb = getBookedRides(us.getUsername());
+		if (lb != null) {
+			for (Booking li : lb) {
+				li.setStatus(REJECTED);
+				li.getRide().setnPlaces(li.getRide().getnPlaces() + li.getSeats());
+			}
+		}
+		List<Alert> la = getAlertsByUsername(us.getUsername());
+		if (la != null) {
+			for (Alert lx : la) {
+				deleteAlert(lx.getAlertNumber());
+			}
 		}
 	}
 
